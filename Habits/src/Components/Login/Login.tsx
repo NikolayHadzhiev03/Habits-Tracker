@@ -1,12 +1,36 @@
+import { useLogin } from "../../apis/authapi.ts"
 export default function Login() {
+
+  const { login } = useLogin();
+
+  const onLogin = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const formData = new FormData(event.currentTarget);
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+
+    if (!email || !password) {
+      console.error("Email or password is missing");
+      return;
+    }
+
+    try {
+      const authData = await login(email, password);
+      console.log("Login success:", authData);
+    } catch (error) {
+      console.error("Login error:", error);
+    }
+  };
   return (
+
     <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900">
       <div className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg w-full max-w-md">
         <h2 className="text-2xl font-bold mb-6 text-center text-gray-800 dark:text-white">
           Login
         </h2>
 
-        <form className="space-y-5">
+        <form className="space-y-5" onSubmit={onLogin}>
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
               Email
@@ -15,7 +39,7 @@ export default function Login() {
               type="email"
               id="email"
               name="email"
-              required
+
               className="mt-1 w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
@@ -28,7 +52,7 @@ export default function Login() {
               type="password"
               id="password"
               name="password"
-              required
+
               className="mt-1 w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
@@ -38,6 +62,7 @@ export default function Login() {
             className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md transition duration-300"
           >
             Login
+
           </button>
         </form>
       </div>

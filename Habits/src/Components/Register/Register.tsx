@@ -1,17 +1,38 @@
-export default function Register(){
-    
+import { useRegister } from "../../apis/authapi";
+
+export default function Register() {
+  const { register } = useRegister();
 
 
+  const onRegister = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const data = new FormData(event.currentTarget);
+    const username = data.get("username") as string;
+    const email = data.get("email") as string;
+    const password = data.get("password") as string;
+    const repassword = data.get("repassword") as string;
+
+    try {
+
+      const newperson = await register(username, email, password, repassword);
+      console.log(newperson);
+
+    } catch (error) {
+      console.log(error)
+    }
+
+  }
 
 
-    return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900">
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900">
       <div className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg w-full max-w-md">
         <h2 className="text-2xl font-bold mb-6 text-center text-gray-800 dark:text-white">
           Create an Account
         </h2>
 
-        <form className="space-y-5">
+        <form className="space-y-5" onSubmit={onRegister}>
           <div>
             <label htmlFor="username" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
               Username
@@ -73,5 +94,5 @@ export default function Register(){
         </form>
       </div>
     </div>
-    )
+  )
 }
