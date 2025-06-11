@@ -1,7 +1,10 @@
 import { useLogin } from "../../apis/authapi.ts"
+import { UserContext } from "../../context/userContext.tsx";
+import { useContext } from "react";
 export default function Login() {
 
   const { login } = useLogin();
+  const { setUser } = useContext(UserContext);
 
   const onLogin = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -17,9 +20,16 @@ export default function Login() {
 
     try {
       const authData = await login(email, password);
-      console.log("Login success:", authData);
+      if (authData.token && authData.user) {
+        localStorage.setItem('jwt', authData.token);
+        localStorage.setItem('user', JSON.stringify(authData.user));
+        setUser(authData.user);
+      } else {
+        console.error('Login failed');
+      }
     } catch (error) {
-      console.error("Login error:", error);
+      console.log(error);
+
     }
   };
   return (
