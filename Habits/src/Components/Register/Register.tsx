@@ -15,8 +15,7 @@ export default function Register() {
 
     try {
 
-      const newperson = await register(username, email, password, repassword);
-      console.log(newperson);
+      await register(username, email, password, repassword);
 
     } catch (error) {
       console.log(error)
