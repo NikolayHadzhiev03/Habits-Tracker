@@ -1,8 +1,11 @@
+import { useNavigate } from "react-router";
 import { useLogin } from "../../apis/authapi.ts"
 import { UserContext } from "../../context/userContext.tsx";
 import { useContext } from "react";
+
 export default function Login() {
 
+  const navigate = useNavigate();
   const { login } = useLogin();
   const { setUser } = useContext(UserContext);
 
@@ -22,8 +25,8 @@ export default function Login() {
       const authData = await login(email, password);
       if (authData.token && authData.user) {
         localStorage.setItem('jwt', authData.token);
-        localStorage.setItem('user', JSON.stringify(authData.user));
         setUser(authData.user);
+        navigate("/home");
       } else {
         console.error('Login failed');
       }

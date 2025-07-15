@@ -1,5 +1,4 @@
 import { Link } from "react-router";
-
 export default function Home() {
 
   const isDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
