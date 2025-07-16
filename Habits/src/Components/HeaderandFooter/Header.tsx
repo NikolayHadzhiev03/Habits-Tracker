@@ -1,18 +1,28 @@
 import { useContext } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { UserContext } from "../../context/userContext";
 
 export default function Header() {
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
+  const navigate = useNavigate();
+  const logouthanler = () => {
+    localStorage.removeItem("jwt");
+    localStorage.removeItem("user");
+    setUser(null);
+    navigate("/login")
+  }
+
   return (
     <nav className="nav">
       <div className="brand">🌿 HabitTracker</div>
       <ul>
         <li><Link to="/">Home</Link></li>
+        <li><Link to="/stats">Stats</Link></li>
         {user ? (
           <>
-            <li><Link to="/profile">{user.username}</Link></li>
+            <li><Link to="/profile">{user.username}'profile</Link></li>
             <li><Link to="/add-habit">Add Habit</Link></li>
+            <li><button onClick={logouthanler} className="logout-link">Logout</button></li>
           </>
         ) : (
           <>
@@ -20,7 +30,6 @@ export default function Header() {
             <li><Link to="/register">Register</Link></li>
           </>
         )}
-        <li><Link to="/stats">Stats</Link></li>
       </ul>
     </nav>
   );

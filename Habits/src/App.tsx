@@ -5,6 +5,7 @@ import Header from './Components/HeaderandFooter/Header'
 import Register from './Components/Register/Register'
 import { Routes, Route } from 'react-router'
 import Footer from './Components/HeaderandFooter/Footer'
+import Profile from './Components/Profile/profile'
 function App() {
 
 
@@ -15,6 +16,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
       <Footer />
     </>

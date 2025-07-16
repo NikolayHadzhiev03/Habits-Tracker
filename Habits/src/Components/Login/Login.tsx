@@ -25,6 +25,7 @@ export default function Login() {
       const authData = await login(email, password);
       if (authData.token && authData.user) {
         localStorage.setItem('jwt', authData.token);
+        localStorage.setItem('user', JSON.stringify(authData.user));
         setUser(authData.user);
         navigate("/home");
       } else {

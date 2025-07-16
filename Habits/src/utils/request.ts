@@ -3,7 +3,7 @@ type HTTPMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
 interface RequestOptions extends RequestInit {
   headers?: Record<string, string>;
 }
-
+const token = localStorage.getItem('jwt');
 const request = async <T = any>(
   method: HTTPMethod,
   url: string,
@@ -14,6 +14,7 @@ const request = async <T = any>(
     method,
     headers: {
       'Content-Type': 'application/json',
+     ...(token ? { Authorization: `Bearer ${token}` } : {}),
       ...(options.headers || {}),
     },
     ...options,
