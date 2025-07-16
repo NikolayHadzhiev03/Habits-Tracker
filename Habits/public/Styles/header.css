@@ -1,3 +1,16 @@
 #nav {
   color: red !important;
 }
+.logout-link {
+  background: none;
+  border: none;
+  color: #2563eb;
+  cursor: pointer;
+  padding: 0;
+  font: inherit;
+  text-decoration: underline;
+}
+
+.logout-link:hover {
+  color: #1d4ed8;
+}

@@ -1,0 +1,33 @@
+.profile-container {
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 20px;
+  text-align: center;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.profile-name {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 5px 0;
+}
+
+.profile-email {
+  color: #777;
+  margin-bottom: 10px;
+}
+
+.profile-button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.profile-button:hover {
+  background-color: #0056b3;
+}
