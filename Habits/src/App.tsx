@@ -6,6 +6,8 @@ import Register from './Components/Register/Register'
 import { Routes, Route } from 'react-router'
 import Footer from './Components/HeaderandFooter/Footer'
 import Profile from './Components/Profile/profile'
+import Habits from './Components/Habits/habits'
+import CreateHabit from './Components/addHabit/addHabit'
 function App() {
 
 
@@ -17,6 +19,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/stats" element={<Habits />} />
+        <Route path="/add-habit" element={<CreateHabit />} />
       </Routes>
       <Footer />
     </>
