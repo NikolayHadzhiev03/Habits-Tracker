@@ -3,7 +3,6 @@ import GenericData from '../modules/GenericData.js';
 import { verifytoken } from '../middleware/verifytoken.js';
 
 const router = express.Router();
-
 router.post('/', verifytoken, async (req, res) => {
   const  payload = req.body;
   const userId = req.user?.id;
@@ -22,6 +21,18 @@ router.post('/', verifytoken, async (req, res) => {
 router.get('/', async (req, res) => {
   try {
     const data = await GenericData.find(); 
+    res.json(data);
+  } catch (error) {
+    res.status(500).json({ error: '❌ Failed to fetch data' });
+  }
+});
+router.get('/onlyOwnerones', verifytoken, async (req, res) => {
+  try {
+    const userId = req.user?.id;
+    if (!userId) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+    const data = await GenericData.find({ userId: userId });
     res.json(data);
   } catch (error) {
     res.status(500).json({ error: '❌ Failed to fetch data' });

@@ -1,6 +1,4 @@
-import React, { createContext, useState, useEffect } from 'react';
-import type { ReactNode } from "react";
-import request from '../utils/request';
+import { createContext, useState, useEffect } from "react";
 
 interface IUser {
     id: string;
@@ -10,51 +8,52 @@ interface IUser {
 
 interface IUserContext {
     user: IUser | null;
-    setUser: React.Dispatch<React.SetStateAction<IUser | null>>;
+    token: string | null;
+    loadingUser: boolean;
+    login: (user: IUser, token: string) => void;
+    logout: () => void;
 }
 
 export const UserContext = createContext<IUserContext>({
     user: null,
-    setUser: () => { },
+    token: null,
+    loadingUser: true,
+    login: () => { },
+    logout: () => { },
 });
 
-interface UserProviderProps {
-    children: ReactNode;
-}
-
-export const UserProvider = ({ children }: UserProviderProps) => {
-    const [user, setUser] = useState<IUser | null>(() => {
-        const stored = localStorage.getItem("user");
-        return stored ? JSON.parse(stored) : null;
-    });
+export const UserProvider = ({ children }: { children: React.ReactNode }) => {
+    const [user, setUser] = useState<IUser | null>(null);
+    const [token, setToken] = useState<string | null>(null);
+    const [loadingUser, setLoadingUser] = useState(true);
 
     useEffect(() => {
-        const token = localStorage.getItem("jwt");
-        if (!token) return;
+        const savedUser = localStorage.getItem("user");
+        const savedToken = localStorage.getItem("jwt");
 
-        const fetchUser = async () => {
-            try {
-                const res = await request.get('http://localhost:5000/api/users/me', {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
-
-                setUser(res.user);
-                localStorage.setItem("user", JSON.stringify(res.user));
-            } catch (error) {
-                console.error("Error loading user:", error);
-                setUser(null);
-                localStorage.removeItem("jwt");
-                localStorage.removeItem("user");
-            }
-        };
-
-        fetchUser();
+        if (savedUser && savedToken) {
+            setUser(JSON.parse(savedUser));
+            setToken(savedToken);
+        }
+        setLoadingUser(false);
     }, []);
 
+    const login = (newUser: IUser, newToken: string) => {
+        setUser(newUser);
+        setToken(newToken);
+        localStorage.setItem("user", JSON.stringify(newUser));
+        localStorage.setItem("jwt", newToken);
+    };
+
+    const logout = () => {
+        setUser(null);
+        setToken(null);
+        localStorage.removeItem("user");
+        localStorage.removeItem("jwt");
+    };
+
     return (
-        <UserContext.Provider value={{ user, setUser }}>
+        <UserContext.Provider value={{ user, token, loadingUser, login, logout }}>
             {children}
         </UserContext.Provider>
     );

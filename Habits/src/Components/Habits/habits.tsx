@@ -1,33 +1,36 @@
+import { useContext, useEffect, useState } from "react";
+import { UserContext } from "../../context/userContext";
 import { getAllHabits } from "../../apis/habitsapi";
-import { useEffect, useState } from "react";
 
 interface Habit {
     _id: { $oid: string };
     payload: {
         title: string;
         done: boolean;
-        userId: string;
     };
-    userId: { $oid: string };
-    timestamp: { $date: string };
-    __v: number;
 }
 
 export default function Habits() {
-    const { getAll } = getAllHabits();
+    const { token, loadingUser } = useContext(UserContext);
     const [habits, setHabits] = useState<Habit[]>([]);
 
     useEffect(() => {
+        if (loadingUser || !token) return;
+        const { getAll } = getAllHabits();
         const fetchHabits = async () => {
             try {
                 const response = await getAll();
+                console.log(response);
                 setHabits(response ?? []);
-            } catch (error) {
-                console.log(error);
+            } catch (err) {
+                console.error("Error fetching habits:", err);
             }
         };
+
         fetchHabits();
-    }, []);
+    }, [loadingUser, token]);
+
+    if (loadingUser) return <p>Loading habits...</p>;
 
     return (
         <div className="box">

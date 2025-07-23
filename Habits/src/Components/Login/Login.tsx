@@ -1,13 +1,12 @@
 import { useNavigate } from "react-router";
-import { useLogin } from "../../apis/authapi.ts"
-import { UserContext } from "../../context/userContext.tsx";
+import { useLogin } from "../../apis/authapi";
+import { UserContext } from "../../context/userContext";
 import { useContext } from "react";
 
 export default function Login() {
-
   const navigate = useNavigate();
-  const { login } = useLogin();
-  const { setUser } = useContext(UserContext);
+  const { login: apiLogin } = useLogin();
+  const { login } = useContext(UserContext);
 
   const onLogin = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -22,45 +21,31 @@ export default function Login() {
     }
 
     try {
-      const authData = await login(email, password);
+      const authData = await apiLogin(email, password);
       if (authData.token && authData.user) {
-        localStorage.setItem('jwt', authData.token);
-        localStorage.setItem('user', JSON.stringify(authData.user));
-        setUser(authData.user);
+        login(authData.user, authData.token);
         navigate("/home");
       } else {
-        console.error('Login failed');
+        console.error("Login failed");
       }
     } catch (error) {
       console.log(error);
-
     }
   };
-  return (
 
+  return (
     <div className="login-container">
       <div className="login-card">
         <h2 className="login-title">Login</h2>
-
         <form onSubmit={onLogin}>
           <div>
             <label htmlFor="email" className="login-label">Email</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              className="login-input"
-            />
+            <input type="email" id="email" name="email" className="login-input" />
           </div>
 
           <div>
             <label htmlFor="password" className="login-label">Password</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              className="login-input"
-            />
+            <input type="password" id="password" name="password" className="login-input" />
           </div>
 
           <button type="submit" className="login-button">
