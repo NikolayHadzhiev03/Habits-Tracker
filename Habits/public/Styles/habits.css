@@ -117,3 +117,32 @@
 .box div.habit-item.not-done {
   background-color: #fecaca;
 }
+.box {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.myhabits {
+  font-size: 1.8rem;
+  margin-bottom: 16px;
+  text-align: center;
+  color: #333;
+}
+
+.box > div {
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  background-color: #fff;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  font-size: 1.1rem;
+  color: #555;
+}
+
+.box > div:last-child {
+  margin-bottom: 0;
+}
