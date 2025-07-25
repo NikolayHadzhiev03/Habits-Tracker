@@ -6,6 +6,9 @@
   background-color: #ffffff;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
 .profile-name {
@@ -19,15 +22,35 @@
   margin-bottom: 10px;
 }
 
-.profile-button {
+.profile-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.profile-button,
+.logout-btn {
   padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
   border: none;
   border-radius: 8px;
   cursor: pointer;
+  font-size: medium;
+}
+
+.profile-button {
+  background-color: #007bff;
+  color: white;
 }
 
 .profile-button:hover {
   background-color: #0056b3;
+}
+
+.logout-btn {
+  background-color: #6c757d;
+  color: whitesmoke;
+}
+
+.logout-btn:hover {
+  background-color: red;
 }

@@ -18,10 +18,13 @@ export default function Profile() {
             <img src="/images.png" alt="Avatar" className="profile-avatar" />
             <h2 className="profile-name">{user?.username}</h2>
             <p className="profile-email">{user?.email}</p>
-            <button className="profile-button">Edit Profile</button>
-            <button onClick={logoutHandler} className="logout-link">
-                Logout
-            </button>
+
+            <div className="profile-buttons">
+                <button className="profile-button">Edit Profile</button>
+                <button onClick={logoutHandler} className="logout-btn">
+                    Logout
+                </button>
+            </div>
         </div>
     )
 }
