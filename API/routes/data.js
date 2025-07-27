@@ -55,7 +55,7 @@ router.put('/:id', async (req, res) => {
   try {
     const updated = await GenericData.findByIdAndUpdate(
       req.params.id,
-      { payload: req.body.payload },
+      { 'payload.done': req.body.done }, 
       { new: true }
     );
     if (!updated) return res.status(404).json({ error: 'Not found' });

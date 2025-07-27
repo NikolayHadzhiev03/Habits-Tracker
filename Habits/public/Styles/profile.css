@@ -127,3 +127,18 @@
 .done-btn:hover {
   background-color: #218838;
 }
+.habit-card {
+  padding: 10px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.habit-card.done-habit {
+  background-color: #e6ffe6;
+  color: #2e7d32;
+  font-weight: bold;
+}

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { getAllHabits } from "../../apis/habitsapi";
 
 interface Habit {
-    _id: { $oid: string };
+    _id: string;
     payload: {
         title: string;
         done: boolean;
@@ -33,7 +33,7 @@ export default function Habits() {
             <h1 className="myhabits">All Habits</h1>
             {habits.length > 0 ? (
                 habits.map((habit) => (
-                    <div key={habit._id.$oid}>
+                    <div key={habit._id}>
                         {habit.payload.title} - {habit.payload.done ? "Done" : "Not Done"}
                     </div>
                 ))

@@ -2,7 +2,6 @@ import request from "../utils/request";
 
 const  Habit_URL = "http://localhost:5000/api/data";
 
-
 export const getAllHabits = () => {
     const  getAll = async () => {
         return await request.get(`${Habit_URL}/`)
@@ -39,5 +38,23 @@ export const ownerHabit = (token: string) => {
 
   return {
     getOwnerOnes,
+  };
+};
+
+export const updateHabit = () => {
+  const markHabitAsDone = async (habitId: string) => {
+    try {
+      const response = await request.put(`${Habit_URL}/${habitId}`, {
+        done: true,
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Failed to update habit", error);
+      throw error;
+    }
+  };
+
+  return {
+    markHabitAsDone,
   };
 };
