@@ -24,7 +24,7 @@ export default function Login() {
       const authData = await apiLogin(email, password);
       if (authData.token && authData.user) {
         login(authData.user, authData.token);
-        navigate("/home");
+        navigate("/stats");
       } else {
         console.error("Login failed");
       }
