@@ -2,6 +2,8 @@ footer {
   background-color: #f3f4f6;
   color: #374151;
   padding: 1.5rem 0;
+  position: flex;
+  bottom: 0;
 }
 
 footer.dark {
@@ -35,51 +37,5 @@ footer a {
 }
 
 footer a:hover {
-  color: #2563eb;
-}
-
-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
-  background-color: #f3f4f6;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-}
-
-nav.dark {
-  background-color: #1f2937;
-}
-
-nav .brand {
-  font-weight: bold;
-  font-size: 1.25rem;
-  color: #1f2937;
-}
-
-nav.dark .brand {
-  color: white;
-}
-
-nav ul {
-  display: flex;
-  gap: 1rem;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-nav ul li a {
-  text-decoration: none;
-  font-size: 0.875rem;
-  color: #374151;
-  transition: color 0.3s ease;
-}
-
-nav.dark ul li a {
-  color: #d1d5db;
-}
-
-nav ul li a:hover {
   color: #2563eb;
 }

@@ -9,22 +9,23 @@ import Profile from './Components/Profile/profile'
 import Habits from './Components/Habits/habits'
 import CreateHabit from './Components/addHabit/addHabit'
 function App() {
-
-
   return (
     <>
       <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/stats" element={<Habits />} />
-        <Route path="/add-habit" element={<CreateHabit />} />
-      </Routes>
+      <main>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/stats" element={<Habits />} />
+          <Route path="/add-habit" element={<CreateHabit />} />
+        </Routes>
+      </main>
       <Footer />
     </>
-  )
+  );
 }
+
 
 export default App
