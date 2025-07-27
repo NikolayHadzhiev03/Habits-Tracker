@@ -28,14 +28,16 @@ export const createHabit = () => {
     };
 };
 
-export function getOnlyOwnersHabits(token: string) {
+export const ownerHabit = (token: string) => {
+  const getOwnerOnes = async () => {
+    const res = await fetch(`${Habit_URL}/onlyOwnerones`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    if (!res.ok) throw new Error("Failed to fetch");
+    return await res.json();
+  };
+
   return {
-    getOwnerOnes: async () => {
-      const res = await fetch(`${Habit_URL}/onlyOwnerones`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      if (!res.ok) throw new Error("Failed to fetch");
-      return await res.json();
-    },
+    getOwnerOnes,
   };
 };
