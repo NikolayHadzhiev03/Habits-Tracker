@@ -1,5 +1,5 @@
-import { useContext, useEffect, useState } from "react";
-import { UserContext } from "../../context/userContext";
+import { useEffect, useState } from "react";
+
 import { getAllHabits } from "../../apis/habitsapi";
 
 interface Habit {
@@ -11,16 +11,13 @@ interface Habit {
 }
 
 export default function Habits() {
-    const { token, loadingUser } = useContext(UserContext);
     const [habits, setHabits] = useState<Habit[]>([]);
 
     useEffect(() => {
-        if (loadingUser || !token) return;
         const { getAll } = getAllHabits();
         const fetchHabits = async () => {
             try {
                 const response = await getAll();
-                console.log(response);
                 setHabits(response ?? []);
             } catch (err) {
                 console.error("Error fetching habits:", err);
@@ -28,13 +25,12 @@ export default function Habits() {
         };
 
         fetchHabits();
-    }, [loadingUser, token]);
+    }, []);
 
-    if (loadingUser) return <p>Loading habits...</p>;
 
     return (
         <div className="box">
-            <h1 className="myhabits">My Habits</h1>
+            <h1 className="myhabits">All Habits</h1>
             {habits.length > 0 ? (
                 habits.map((habit) => (
                     <div key={habit._id.$oid}>
