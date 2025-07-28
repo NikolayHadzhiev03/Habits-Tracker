@@ -22,17 +22,19 @@ export default function CreateHabit() {
 
     return (
         <div className="create-habit-page">
-            <h1>Add New Habit</h1>
-            <input
-                type="text"
-                placeholder="Enter habit title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                className="habit-input"
-            />
-            <button onClick={handleCreate} className="habit-btn">
-                Create
-            </button>
+            <div>
+                <h1>Add New Habit</h1>
+                <input
+                    type="text"
+                    placeholder="Enter habit title"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    className="habit-input"
+                />
+                <button onClick={handleCreate} className="habit-btn">
+                    Create
+                </button>
+            </div>
         </div>
     );
 }
