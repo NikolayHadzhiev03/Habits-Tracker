@@ -142,3 +142,16 @@
   color: #2e7d32;
   font-weight: bold;
 }
+.habit-card {
+  transition: opacity 1s ease-out, transform 1s ease-out;
+}
+
+.fade-out {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.done-habit {
+  background-color: #e0ffe0;
+  border: 1px solid #a0dca0;
+}
