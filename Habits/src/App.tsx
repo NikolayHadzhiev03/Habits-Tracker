@@ -8,6 +8,8 @@ import Footer from './Components/HeaderandFooter/Footer'
 import Profile from './Components/Profile/profile'
 import Habits from './Components/Habits/habits'
 import CreateHabit from './Components/addHabit/addHabit'
+import IsAuthGuard from './Guards/isAuthGuard'
+
 function App() {
   return (
     <>
@@ -17,9 +19,12 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/profile" element={<Profile />} />
           <Route path="/stats" element={<Habits />} />
-          <Route path="/add-habit" element={<CreateHabit />} />
+
+          <Route element={<IsAuthGuard />}>
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/add-habit" element={<CreateHabit />} />
+          </Route>
         </Routes>
       </main>
       <Footer />
@@ -27,5 +32,4 @@ function App() {
   );
 }
 
-
-export default App
+export default App;
