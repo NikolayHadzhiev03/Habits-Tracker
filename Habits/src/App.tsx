@@ -9,6 +9,8 @@ import Profile from './Components/Profile/profile'
 import Habits from './Components/Habits/habits'
 import CreateHabit from './Components/addHabit/addHabit'
 import IsAuthGuard from './Guards/isAuthGuard'
+import NotFound404 from './Components/404/errorPage'
+import IsGuest from './Guards/guestGuard'
 
 function App() {
   return (
@@ -16,10 +18,13 @@ function App() {
       <Header />
       <main>
         <Routes>
+          <Route element={<IsGuest />}>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+          </Route>
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
           <Route path="/stats" element={<Habits />} />
+          <Route path="*" element={<NotFound404 />} />
 
           <Route element={<IsAuthGuard />}>
             <Route path="/profile" element={<Profile />} />

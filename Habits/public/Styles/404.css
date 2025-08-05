@@ -1,0 +1,43 @@
+.notfound-wrapper {
+  display: grid;
+  place-items: center;
+  height: 100vh;
+  padding: 20px;
+  background-color: #f0f2f5;
+}
+
+.notfound-container {
+  background-color: #ffffff;
+  padding: 40px 30px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 500px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.notfound-image {
+  width: 180px;
+  height: auto;
+  margin: 0 auto;
+}
+
+.notfound-title {
+  font-size: 26px;
+  font-weight: 700;
+  color: #333;
+}
+
+.notfound-text {
+  font-size: 16px;
+  color: #666;
+}
+
+.notfound-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
