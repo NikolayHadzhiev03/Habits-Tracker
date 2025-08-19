@@ -22,7 +22,10 @@ export default function Profile() {
 
     const logoutHandler = () => {
         logout();
-        navigate("/login");
+
+        setTimeout(() => {
+            navigate("/login");
+        }, 1);
     };
 
     const fetchHabits = async () => {
@@ -62,7 +65,7 @@ export default function Profile() {
                 <p className="profile-email">{user?.email}</p>
 
                 <div className="profile-buttons">
-                    <button className="profile-button">Edit Profile</button>
+                    <button className="profile-button" onClick={() => navigate("/edit-profile")} >Edit Profile</button>
                     <button onClick={logoutHandler} className="logout-btn">
                         Logout
                     </button>
