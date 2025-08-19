@@ -21,8 +21,6 @@ export default function Profile() {
     const [removingHabitIds, setRemovingHabitIds] = useState<string[]>([]);
 
     const logoutHandler = () => {
-        localStorage.removeItem("jwt");
-        localStorage.removeItem("user");
         logout();
         navigate("/login");
     };
