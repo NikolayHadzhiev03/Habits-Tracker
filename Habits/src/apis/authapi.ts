@@ -21,7 +21,15 @@ export const useRegister = () => {
 
 
   return {
-    register ,
+    register ,}}
 
-  } 
+    export const updateUser = () =>{
+  const update = async(username : string , email: string ,password:string) => {
+    return request.put(`${BASE_URL}/profile`,{username , email ,password})
+  }
+
+
+  return {
+    update,
+  }
 }
