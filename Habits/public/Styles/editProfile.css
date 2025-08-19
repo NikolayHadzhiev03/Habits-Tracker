@@ -1,0 +1,60 @@
+.edit-profile-page {
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.edit-profile-page h2 {
+  text-align: center;
+  font-size: 24px;
+  font-weight: 700;
+  color: #333;
+}
+
+.edit-profile-page input {
+  padding: 10px 12px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  outline: none;
+  transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+.edit-profile-page input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+.edit-profile-page button {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 500;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.edit-profile-page button:first-of-type {
+  background-color: #007bff;
+  color: white;
+}
+
+.edit-profile-page button:first-of-type:hover {
+  background-color: #0056b3;
+}
+
+.edit-profile-page button:last-of-type {
+  background-color: #6c757d;
+  color: whitesmoke;
+}
+
+.edit-profile-page button:last-of-type:hover {
+  background-color: #5a6268;
+}
