@@ -12,6 +12,7 @@ interface IUserContext {
     loadingUser: boolean;
     login: (user: IUser, token: string) => void;
     logout: () => void;
+    setUser: (user: IUser) => void;
 }
 
 export const UserContext = createContext<IUserContext>({
@@ -20,10 +21,11 @@ export const UserContext = createContext<IUserContext>({
     loadingUser: true,
     login: () => { },
     logout: () => { },
+    setUser: () => { },
 });
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
-    const [user, setUser] = useState<IUser | null>(null);
+    const [user, setUserState] = useState<IUser | null>(null);
     const [token, setToken] = useState<string | null>(null);
     const [loadingUser, setLoadingUser] = useState(true);
 
@@ -32,28 +34,33 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         const savedToken = localStorage.getItem("jwt");
 
         if (savedUser && savedToken) {
-            setUser(JSON.parse(savedUser));
+            setUserState(JSON.parse(savedUser));
             setToken(savedToken);
         }
         setLoadingUser(false);
     }, []);
 
     const login = (newUser: IUser, newToken: string) => {
-        setUser(newUser);
+        setUserState(newUser);
         setToken(newToken);
         localStorage.setItem("user", JSON.stringify(newUser));
         localStorage.setItem("jwt", newToken);
     };
 
     const logout = () => {
-        setUser(null);
+        setUserState(null);
         setToken(null);
         localStorage.removeItem("user");
         localStorage.removeItem("jwt");
     };
 
+    const setUser = (updatedUser: IUser) => {
+        setUserState(updatedUser);
+        localStorage.setItem("user", JSON.stringify(updatedUser));
+    };
+
     return (
-        <UserContext.Provider value={{ user, token, loadingUser, login, logout }}>
+        <UserContext.Provider value={{ user, token, loadingUser, login, logout, setUser }}>
             {children}
         </UserContext.Provider>
     );
