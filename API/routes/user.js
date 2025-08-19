@@ -47,6 +47,28 @@ router.post('/login', async (req, res) => {
   }
 });
 
+  router.put('/profile'),verifytoken , async ( req, res ) => {
+    try{
+      const {username, email , password} = req.body;
+      const updates = {};
+    if (username) updates.username = username;
+    if (email) updates.email = email;
+    if (password) {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      updates.password = hashedPassword;
+    }
+
+    const updatedUser = await User.findOneAndUpdate(
+      req.user.id,
+      updates,
+      {new : true }).select("password")
+    
+      res.json(updatedUser)}
+      catch(error) {
+        console.log(error)
+
+      }
+    } 
 router.get('/me', verifytoken, async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
