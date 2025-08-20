@@ -1,31 +1,16 @@
-import { useEffect, useState } from "react";
-
-import { getAllHabits } from "../../apis/habitsapi";
-
-interface Habit {
-    _id: string;
-    payload: {
-        title: string;
-        done: boolean;
-    };
-}
+import { useEffect, } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { type RootState, type AppDispatch } from "../../Store/store";
+import { fetchHabits } from "../../Store/habitSlice";
 
 export default function Habits() {
-    const [habits, setHabits] = useState<Habit[]>([]);
+    const dispatch = useDispatch<AppDispatch>();
+    const { items: habits, loading, error } = useSelector((state: RootState) => state.habits);
 
     useEffect(() => {
-        const { getAll } = getAllHabits();
-        const fetchHabits = async () => {
-            try {
-                const response = await getAll();
-                setHabits(response ?? []);
-            } catch (err) {
-                console.error("Error fetching habits:", err);
-            }
-        };
-
-        fetchHabits();
-    }, []);
+        dispatch(fetchHabits());
+        console.log(habits)
+    }, [dispatch]);
 
 
     return (
@@ -34,7 +19,7 @@ export default function Habits() {
             {habits.length > 0 ? (
                 habits.map((habit) => (
                     <div key={habit._id}>
-                        {habit.payload.title} - {habit.payload.done ? "Done" : "Not Done"}
+                        {habit.title} - {habit.done ? "Done" : "Not Done"}
                     </div>
                 ))
             ) : (

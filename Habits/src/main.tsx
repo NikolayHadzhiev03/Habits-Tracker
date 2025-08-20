@@ -5,7 +5,8 @@ import './index.css'
 import App from './App.tsx'
 import { UserProvider } from './context/userContext.tsx'
 import { Provider } from 'react-redux'
-import { store } from './Store/store.ts'
+import { store } from '../src/Store/store.ts'
+
 createRoot(document.getElementById('root')!).render(
   <Provider store={store}>
     <UserProvider>

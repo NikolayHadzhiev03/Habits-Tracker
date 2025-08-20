@@ -1,19 +1,21 @@
 import { useContext, useState } from "react";
-import { createHabit } from "../../apis/habitsapi";
 import { useNavigate } from "react-router";
 import { UserContext } from "../../context/userContext";
+import { useDispatch } from "react-redux";
+import type { AppDispatch } from "../../Store/store";
+import { addHabit } from "../../Store/habitSlice";
 
 export default function CreateHabit() {
-    const { create } = createHabit();
+    const dispatch = useDispatch<AppDispatch>();
     const [title, setTitle] = useState("");
     const navigate = useNavigate();
     const user = useContext(UserContext);
-    const userId = user.user?.id;
+    const userID = user.user?.id ?? "";
 
     const handleCreate = async () => {
         if (!title.trim()) return;
         try {
-            await create(title, userId ?? "");
+            await dispatch(addHabit({ title, userID }))
             navigate("/stats");
         } catch (error) {
             console.error("Failed to create habit:", error);

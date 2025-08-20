@@ -1,55 +1,35 @@
 import { useContext, useEffect, useState } from "react";
-import { UserContext } from "../../context/userContext";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-import { ownerHabit } from "../../apis/habitsapi";
-import { updateHabit } from "../../apis/habitsapi";
-
-interface Habit {
-    _id: string;
-    payload: {
-        title: string;
-        done: boolean;
-    };
-}
+import { UserContext } from "../../context/userContext";
+import { type AppDispatch, type RootState } from "../../Store/store";
+import { fetchHabits, changeHabit } from "../../Store/habitSlice";
 
 export default function Profile() {
     const navigate = useNavigate();
-    const [habits, setHabits] = useState<Habit[]>([]);
-    const { user, logout, token } = useContext(UserContext);
-    const { getOwnerOnes } = ownerHabit(token!);
-    const { markHabitAsDone } = updateHabit();
+    const dispatch = useDispatch<AppDispatch>();
+    const { user, logout } = useContext(UserContext);
+    const { items: habits, loading, error } = useSelector(
+        (state: RootState) => state.habits
+    );
     const [removingHabitIds, setRemovingHabitIds] = useState<string[]>([]);
 
     const logoutHandler = () => {
         logout();
-
         setTimeout(() => {
             navigate("/login");
         }, 1);
     };
 
-    const fetchHabits = async () => {
-        try {
-            const response = await getOwnerOnes();
-            setHabits(response ?? []);
-        } catch (err) {
-            console.error("Error fetching habits:", err);
-        }
-    };
-
     useEffect(() => {
-        fetchHabits();
-    }, [user]);
+        dispatch(fetchHabits());
+    }, [dispatch, user]);
 
     const updatehabit = async (habitId: string) => {
         try {
-            await markHabitAsDone(habitId);
-
-
+            await dispatch(changeHabit(habitId)).unwrap();
             setRemovingHabitIds((prev) => [...prev, habitId]);
-
-            setTimeout(async () => {
-                await fetchHabits();
+            setTimeout(() => {
                 setRemovingHabitIds((prev) => prev.filter((id) => id !== habitId));
             }, 3000);
         } catch (err) {
@@ -65,7 +45,12 @@ export default function Profile() {
                 <p className="profile-email">{user?.email}</p>
 
                 <div className="profile-buttons">
-                    <button className="profile-button" onClick={() => navigate("/edit-profile")} >Edit Profile</button>
+                    <button
+                        className="profile-button"
+                        onClick={() => navigate("/edit-profile")}
+                    >
+                        Edit Profile
+                    </button>
                     <button onClick={logoutHandler} className="logout-btn">
                         Logout
                     </button>
@@ -74,19 +59,20 @@ export default function Profile() {
 
             <div className="myhabits">
                 <h1 className="myhabits-title">My Habits</h1>
+                {loading && <p>Loading habits...</p>}
+                {error && <p>{error}</p>}
                 {habits.length > 0 ? (
                     habits.map((habit) => (
                         <div
                             key={habit._id}
                             className={`habit-card 
-                                ${habit.payload.done ? "done-habit" : ""} 
-                                ${removingHabitIds.includes(habit._id) ? "fade-out" : ""}`}
+                ${habit.done ? "done-habit" : ""} 
+                ${removingHabitIds.includes(habit._id) ? "fade-out" : ""}`}
                         >
                             <span>
-                                {habit?.payload?.title} -{" "}
-                                {habit?.payload?.done ? "Done" : "Not Done"}
+                                {habit.title} - {habit.done ? "Done" : "Not Done"}
                             </span>
-                            {!habit.payload.done && (
+                            {!habit.done && (
                                 <button
                                     className="done-btn"
                                     onClick={() => updatehabit(habit._id)}
@@ -97,7 +83,7 @@ export default function Profile() {
                         </div>
                     ))
                 ) : (
-                    <p>No habits found.</p>
+                    !loading && <p>No habits found.</p>
                 )}
             </div>
         </div>
