@@ -6,7 +6,7 @@ const NotFound404 = () => {
         <div className="notfound-wrapper">
             <div className="notfound-container">
                 <img
-                    src="/404-illustration.png"
+                    src="/404.png"
                     alt="404"
                     className="notfound-image"
                 />
@@ -17,9 +17,6 @@ const NotFound404 = () => {
                 <div className="notfound-buttons">
                     <Link to="/" className="profile-button">
                         Обратно към началната
-                    </Link>
-                    <Link to="/login" className="logout-btn">
-                        Вход
                     </Link>
                 </div>
             </div>
