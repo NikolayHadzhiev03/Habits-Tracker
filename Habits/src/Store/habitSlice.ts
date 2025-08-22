@@ -48,10 +48,15 @@ export const addHabit = createAsyncThunk(
 );
 
 export const changeHabit = createAsyncThunk(
-  "habit/updatehabit",
-  async (habitID: string) => {
-    const { markHabitAsDone } = updateHabit();
-    return await markHabitAsDone(habitID);
+  "habits/changeHabit",
+  async (habitId: string, { rejectWithValue }) => {
+    try {
+      const { markHabitAsDone } = updateHabit();
+      const updated = await markHabitAsDone(habitId);
+      return updated;
+    } catch (err: any) {
+      return rejectWithValue(err.message || "Failed to update habit");
+    }
   }
 );
 
@@ -92,7 +97,12 @@ const habitSlice = createSlice({
           done: action.payload.done ?? action.payload.payload?.done ?? false,
         });
       })
+      .addCase(changeHabit.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
       .addCase(changeHabit.fulfilled, (state, action: PayloadAction<any>) => {
+        state.loading = false;
         const index = state.items.findIndex(
           (h) => h._id === action.payload._id
         );
@@ -103,6 +113,10 @@ const habitSlice = createSlice({
             done: action.payload.done ?? action.payload.payload?.done ?? false,
           };
         }
+      })
+      .addCase(changeHabit.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
       })
       .addCase(ownerHabits.pending, (state) => {
         state.loading = true;
@@ -115,6 +129,7 @@ const habitSlice = createSlice({
           done: h.done ?? h.payload?.done ?? false,
         }));
         state.loading = false;
+        state.error = "";
       })
       .addCase(ownerHabits.rejected, (state, action) => {
         state.loading = false;
