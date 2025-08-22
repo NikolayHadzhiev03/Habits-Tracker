@@ -3,12 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { UserContext } from "../../context/userContext";
 import { type AppDispatch, type RootState } from "../../Store/store";
-import { fetchHabits, changeHabit } from "../../Store/habitSlice";
-
+import { changeHabit, ownerHabits } from "../../Store/habitSlice";
+import toast from "react-hot-toast";
 export default function Profile() {
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
-    const { user, logout } = useContext(UserContext);
+    const { user, logout, token } = useContext(UserContext);
     const { items: habits, loading, error } = useSelector(
         (state: RootState) => state.habits
     );
@@ -22,7 +22,8 @@ export default function Profile() {
     };
 
     useEffect(() => {
-        dispatch(fetchHabits());
+        dispatch(ownerHabits(token!));
+
     }, [dispatch, user]);
 
     const updatehabit = async (habitId: string) => {
@@ -32,8 +33,8 @@ export default function Profile() {
             setTimeout(() => {
                 setRemovingHabitIds((prev) => prev.filter((id) => id !== habitId));
             }, 3000);
-        } catch (err) {
-            console.error("Error updating habit:", err);
+        } catch (err: any) {
+            toast.error(err);
         }
     };
 

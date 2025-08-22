@@ -12,10 +12,11 @@ import IsAuthGuard from './Guards/isAuthGuard'
 import NotFound404 from './Components/404/errorPage'
 import IsGuest from './Guards/guestGuard'
 import EditProfile from './Components/editProfile/editProfile'
-
+import { Toaster } from 'react-hot-toast'
 function App() {
   return (
     <>
+
       <Header />
       <main>
         <Routes>
@@ -36,6 +37,9 @@ function App() {
         </Routes>
       </main>
       <Footer />
+
+
+      <Toaster position="top-right" reverseOrder={false} />
     </>
   );
 }
