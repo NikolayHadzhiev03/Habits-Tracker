@@ -1,9 +1,9 @@
-type HTTPMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
+type HTTPMethod = "GET" | "POST" | "PUT" | "DELETE";
 
 interface RequestOptions extends RequestInit {
   headers?: Record<string, string>;
 }
-const token = localStorage.getItem('jwt');
+const token = localStorage.getItem("jwt");
 const request = async <T = any>(
   method: HTTPMethod,
   url: string,
@@ -13,8 +13,8 @@ const request = async <T = any>(
   const config: RequestInit = {
     method,
     headers: {
-      'Content-Type': 'application/json',
-     ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      "Content-Type": "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
       ...(options.headers || {}),
     },
     ...options,
@@ -34,17 +34,22 @@ const request = async <T = any>(
   return response.json();
 };
 
-
 request.get = <T = any>(url: string, options: RequestOptions = {}) =>
-  request<T>('GET', url, undefined, options);
+  request<T>("GET", url, undefined, options);
 
-request.post = <T = any>(url: string, data?: any, options: RequestOptions = {}) =>
-  request<T>('POST', url, data, options);
+request.post = <T = any>(
+  url: string,
+  data?: any,
+  options: RequestOptions = {}
+) => request<T>("POST", url, data, options);
 
-request.put = <T = any>(url: string, data?: any, options: RequestOptions = {}) =>
-  request<T>('PUT', url, data, options);
+request.put = <T = any>(
+  url: string,
+  data?: any,
+  options: RequestOptions = {}
+) => request<T>("PUT", url, data, options);
 
 request.delete = <T = any>(url: string, options: RequestOptions = {}) =>
-  request<T>('DELETE', url, undefined, options);
+  request<T>("DELETE", url, undefined, options);
 
 export default request;

@@ -9,7 +9,6 @@ export default function Habits() {
 
     useEffect(() => {
         dispatch(fetchHabits());
-        console.log(habits)
     }, [dispatch]);
 
 
